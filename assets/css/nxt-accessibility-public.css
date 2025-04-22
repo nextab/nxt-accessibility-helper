@@ -1,0 +1,97 @@
+/**
+ * NXT Accessibility Helper CSS
+ * These styles control the appearance of the accessibility features
+ */
+
+:root {
+	/* Color variables */
+	--nxt-a11y-primary-color: #6200ff;
+	--nxt-a11y-text-color: #fff;
+	--nxt-a11y-bg-color: #000;
+	--nxt-a11y-shadow-color: rgba(0, 0, 0, 0.3);
+	--nxt-a11y-highlight-color: #ff0;
+	
+	/* Size variables */
+	--nxt-a11y-padding-x: 15px;
+	--nxt-a11y-padding-y: 10px;
+	--nxt-a11y-border-radius: 4px;
+	--nxt-a11y-font-size: 16px;
+	--nxt-a11y-font-weight: 600;
+	--nxt-a11y-z-index: 100000;
+	
+	/* Outline variables */
+	--nxt-a11y-outline-width: 2px;
+	--nxt-a11y-outline-offset: 2px;
+}
+
+/* Base skip link styles - used by all style variants */
+.nxt-skip-link {
+	display: block;
+	position: absolute;
+	top: -100px;
+	left: 10px;
+	z-index: var(--nxt-a11y-z-index);
+	padding: var(--nxt-a11y-padding-y) var(--nxt-a11y-padding-x);
+	background-color: var(--nxt-a11y-bg-color);
+	color: var(--nxt-a11y-text-color);
+	text-decoration: none;
+	font-weight: var(--nxt-a11y-font-weight);
+	font-size: var(--nxt-a11y-font-size);
+	border-radius: 0 0 var(--nxt-a11y-border-radius) var(--nxt-a11y-border-radius);
+	transition: top 0.3s ease;
+	box-shadow: 0 3px 6px var(--nxt-a11y-shadow-color);
+}
+
+/* Default style - only appears on focus */
+.nxt-skip-link:focus {
+	top: 0;
+	outline: var(--nxt-a11y-outline-width) solid var(--nxt-a11y-primary-color);
+	outline-offset: var(--nxt-a11y-outline-offset);
+}
+
+/* Always visible style */
+.nxt-style-visible {
+	top: 0;
+}
+
+/* Minimal style */
+.nxt-style-minimal {
+	padding: calc(var(--nxt-a11y-padding-y) / 2) calc(var(--nxt-a11y-padding-x) / 1.5);
+	font-size: calc(var(--nxt-a11y-font-size) - 2px);
+	background-color: rgba(0, 0, 0, 0.7);
+}
+.nxt-style-minimal:focus {
+	background-color: var(--nxt-a11y-bg-color);
+}
+
+/* High contrast style for better visibility */
+.nxt-style-high-contrast {
+	background-color: var(--nxt-a11y-bg-color);
+	color: var(--nxt-a11y-highlight-color);
+	border: var(--nxt-a11y-outline-width) solid var(--nxt-a11y-highlight-color);
+}
+.nxt-style-high-contrast:focus {
+	outline-color: var(--nxt-a11y-highlight-color);
+}
+
+/* Class to enable focus improvements - can be toggled via settings */
+.nxt-a11y-focus-improvements-enabled input:focus,
+.nxt-a11y-focus-improvements-enabled textarea:focus,
+.nxt-a11y-focus-improvements-enabled select:focus,
+.nxt-a11y-focus-improvements-enabled button:focus {
+	outline: var(--nxt-a11y-outline-width) solid var(--nxt-a11y-primary-color) !important;
+	outline-offset: var(--nxt-a11y-outline-offset);
+}
+
+/* Improve keyboard focus visibility - can be toggled via settings */
+.nxt-a11y-focus-improvements-enabled a:focus,
+.nxt-a11y-focus-improvements-enabled button:focus,
+.nxt-a11y-focus-improvements-enabled [tabindex]:focus {
+	outline: var(--nxt-a11y-outline-width) solid var(--nxt-a11y-primary-color) !important;
+	outline-offset: var(--nxt-a11y-outline-offset);
+}
+
+/* Fix for mobile menu toggle - can be toggled via settings */
+.nxt-a11y-focus-improvements-enabled .mobile_menu_bar_toggle:focus {
+	outline: var(--nxt-a11y-outline-width) solid var(--nxt-a11y-primary-color) !important;
+} 

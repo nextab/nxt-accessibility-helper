@@ -106,3 +106,13 @@ function nxt_accessibility_run() {
 	$plugin->run();
 }
 nxt_accessibility_run();
+
+/**
+ * Initialize the admin class.
+ */
+function nxt_accessibility_admin_init() {
+	if (is_admin()) {
+		$admin = new NXT_Accessibility_Admin();
+	}
+}
+add_action('init', 'nxt_accessibility_admin_init');

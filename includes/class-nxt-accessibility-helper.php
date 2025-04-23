@@ -85,7 +85,7 @@ class NXT_Accessibility_Helper {
 		$this->skip_link->init();
 		
 		// Enqueue CSS for accessibility improvements
-		add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 		
 		// Add the ID to the target element if needed
 		add_action('wp_footer', array($this, 'ensure_target_element_has_id'), 5);
@@ -117,28 +117,36 @@ class NXT_Accessibility_Helper {
 			wp_add_inline_style($this->plugin_name, $this->options['custom_styles']);
 		}
 		
-		// Only enqueue the target element script if needed
-		if (empty($this->options['target_id']) && (!empty($this->options['target_element']) || !empty($this->options['target_class']))) {
-			wp_enqueue_script(
-				$this->plugin_name,
-				NXT_ACCESSIBILITY_URL . 'assets/js/nxt-accessibility-public.js',
-				array(),
-				$this->version,
-				true
-			);
-			
-			// Localize the script with our data
-			wp_localize_script(
-				$this->plugin_name,
-				'nxtA11yFrontend',
-				array(
-					'targetClass' => !empty($this->options['target_class']) ? esc_js($this->options['target_class']) : '',
-					'targetElement' => !empty($this->options['target_element']) ? esc_js($this->options['target_element']) : '',
-					'skipTargetId' => 'nxt-skip-target',
-					'skipLinkClass' => 'nxt-skip-link'
-				)
-			);
-		}
+		// Always enqueue the hash link focus fix script
+		wp_enqueue_script(
+			$this->plugin_name . '-hashlink-focus',
+			NXT_ACCESSIBILITY_URL . 'assets/js/nxt-hashlink-focus.js',
+			array(),
+			$this->version,
+			true
+		);
+		
+		// Always enqueue the target element script for skip links
+		wp_enqueue_script(
+			$this->plugin_name,
+			NXT_ACCESSIBILITY_URL . 'assets/js/nxt-accessibility-public.js',
+			array(),
+			$this->version,
+			true
+		);
+		
+		// Localize the script with our data - always pass this data
+		wp_localize_script(
+			$this->plugin_name,
+			'nxtA11yFrontend',
+			array(
+				'targetId' => !empty($this->options['target_id']) ? esc_js($this->options['target_id']) : '',
+				'targetClass' => !empty($this->options['target_class']) ? esc_js($this->options['target_class']) : '',
+				'targetElement' => !empty($this->options['target_element']) ? esc_js($this->options['target_element']) : '',
+				'skipTargetId' => 'nxt-skip-target',
+				'skipLinkClass' => 'nxt-skip-link'
+			)
+		);
 	}
 	
 	/**
@@ -199,6 +207,25 @@ class NXT_Accessibility_Helper {
 			
 			echo '}';
 			echo '</style>';
+		}
+	}
+	
+	/**
+	 * Ensures the target element for skip link has an ID.
+	 * 
+	 * If no target ID is specified but a target element or class is,
+	 * this method tries to add the ID attribute to the first matching element.
+	 * 
+	 * @since    1.0.0
+	 */
+	public function ensure_target_element_has_id() {
+		// Only proceed if no target ID but we have a target element or class
+		if (empty($this->options['target_id']) && 
+			(!empty($this->options['target_element']) || !empty($this->options['target_class']))) {
+			
+			// This will be handled via JavaScript in enqueue_scripts()
+			// The script will find the target element and add an ID to it
+			return;
 		}
 	}
 } 

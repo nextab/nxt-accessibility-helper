@@ -47,7 +47,7 @@ class NXT_Accessibility_Admin {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		$this->plugin_name = 'nxt-accessibility-helper';
+		$this->plugin_name = 'nxt-accessibility';
 		$this->version = NXT_ACCESSIBILITY_VERSION;
 		$this->options = get_option('nxt_accessibility_options');
 		

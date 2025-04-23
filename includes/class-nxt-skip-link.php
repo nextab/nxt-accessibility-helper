@@ -52,20 +52,33 @@ class NXT_Skip_Link {
 			$this->options['link_text'] : 
 			__('Skip to content', 'nxt-accessibility');
 			
-		$target_id = !empty($this->options['target_id']) ? 
-			$this->options['target_id'] : 
-			'nxt-skip-target';
-			
+		// Set default target ID
+		$target_id = 'nxt-skip-target';
+		
+		// Use specified target ID if available
+		if (!empty($this->options['target_id'])) {
+			$target_id = $this->options['target_id'];
+		}
+		
 		$link_class = 'nxt-skip-link';
 		
 		if (!empty($this->options['link_style'])) {
 			$link_class .= ' nxt-style-' . $this->options['link_style'];
 		}
 		
+		// Add a data attribute to help identify the link when there are multiple on the page
+		$data_attr = '';
+		if (!empty($this->options['target_element'])) {
+			$data_attr = ' data-target-element="' . esc_attr($this->options['target_element']) . '"';
+		} elseif (!empty($this->options['target_class'])) {
+			$data_attr = ' data-target-class="' . esc_attr($this->options['target_class']) . '"';
+		}
+		
 		printf(
-			'<a href="#%1$s" class="%2$s">%3$s</a>',
+			'<a href="#%1$s" class="%2$s"%3$s>%4$s</a>',
 			esc_attr($target_id),
 			esc_attr($link_class),
+			$data_attr,
 			esc_html($link_text)
 		);
 	}

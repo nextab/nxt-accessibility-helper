@@ -74,6 +74,22 @@
 	outline-color: var(--nxt-a11y-highlight-color);
 }
 
+/* Style for target elements when they receive focus via hash links */
+[tabindex="-1"]:focus {
+	outline: none;
+}
+
+.nxt-hash-target:focus {
+	outline: var(--nxt-a11y-outline-width) dashed var(--nxt-a11y-primary-color);
+	outline-offset: var(--nxt-a11y-outline-offset);
+}
+
+/* Legacy class support for backward compatibility */
+.nxt-skip-link-target:focus {
+	outline: var(--nxt-a11y-outline-width) dashed var(--nxt-a11y-primary-color);
+	outline-offset: var(--nxt-a11y-outline-offset);
+}
+
 /* Class to enable focus improvements - can be toggled via settings */
 .nxt-a11y-focus-improvements-enabled input:focus,
 .nxt-a11y-focus-improvements-enabled textarea:focus,

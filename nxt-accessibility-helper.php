@@ -3,7 +3,7 @@
  * Plugin Name: NXT Accessibility Helper
  * Plugin URI: https://nextab.de
  * Description: Improves website accessibility with customizable skip links and other accessibility enhancements
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: nexTab
  * Author URI: https://nextab.de
  * Text Domain: nxt-accessibility
@@ -20,7 +20,7 @@ if (!defined('WPINC')) {
 /**
  * Current plugin version.
  */
-define('NXT_ACCESSIBILITY_VERSION', '1.0.0');
+define('NXT_ACCESSIBILITY_VERSION', '1.1.0');
 define('NXT_ACCESSIBILITY_PATH', plugin_dir_path(__FILE__));
 define('NXT_ACCESSIBILITY_URL', plugin_dir_url(__FILE__));
 
